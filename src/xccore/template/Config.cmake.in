@@ -1,0 +1,17 @@
+# - Config file for the project package
+# In Binary dir
+if(EXISTS "@PROJECT_BINARY_DIR@/CMakeCache.txt")
+   include("@PROJECT_BINARY_DIR@/@PROJECT_NAME@BuildTreeSettings.cmake")
+else()
+  set(@PROJECT_NAME@_INCLUDE_DIRS "@PROJECT_SOURCE_DIR@/@CONF_REL_INCLUDE_DIR@")
+endif()
+
+# Our library dependencies (contains definitions for IMPORTED targets)
+include("@PROJECT_BINARY_DIR@/@PROJECT_NAME@.cmake")
+
+# Our library path, if the package has not been installed
+set(@UPPER_PROJECT_NAME@_LIBRARY_PATH          @PROJECT_BINARY_DIR@/lib)
+
+# These are IMPORTED targets created
+set(@UPPER_PROJECT_NAME@_INCLUDE_DIRS          ${@PROJECT_NAME@_INCLUDE_DIRS} @OUTPUT_INCLUDES@)
+set(@UPPER_PROJECT_NAME@_LIBRARIES             @OUTPUT_LINKS@)

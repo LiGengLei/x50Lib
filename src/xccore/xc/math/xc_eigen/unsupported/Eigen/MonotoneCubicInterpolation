@@ -1,0 +1,61 @@
+// This file is part of Eigen, a lightweight C++ template library
+// for linear algebra.
+//
+// Copyright (c) 2013,2014 Yanyu Su (suyanyucn@gmail.com)
+//
+// This Source Code Form is subject to the terms of the Mozilla
+// Public License v. 2.0. If a copy of the MPL was not distributed
+// with this file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+#ifndef EIGEN_MONOTONE_CUBIC_INTERPOLATION_MODULE_H
+#define EIGEN_MONOTONE_CUBIC_INTERPOLATION_MODULE_H
+
+namespace Eigen
+{
+/**
+  * \defgroup Monotone_Cubic_Interpolation_Module Monotone cubic interpolation module
+  *
+  * This module provides a simple Mmonotone cubic interpolation class while
+  * offering most basic functionality to fit a monotone cubic to point sets.
+  *
+  * Please refer to the following link for details on Monotone cubic interpolation
+  * http://en.wikipedia.org/wiki/Monotone_cubic_interpolation
+  *
+  * \code
+  *
+  * #include <unsupported/MonotoneCubicInterpolation/MonotoneCubicInterpolation>
+  *
+  * // A example consists of 4 steps.
+  * 
+  * // Generate input of x
+  * RowVectorXd xs(7);
+  * xs << -3, -2, -1, 0, 1, 2, 3;
+  *
+  * // Generate intput of y (2-d)
+  * MatrixXd ys(7, 2);
+  * ys << -1.000000, 30.776835,
+  *   -1.000000, -30.776835,
+  *   -1.000000, -7.265425,
+  *   0.000000, 0.000000,
+  *   1.000000, 7.265425,
+  *   1.000000, 30.776835,
+  *   1.000000, -30.776835;
+  * ys.transposeInPlace();
+  *
+  * // Interpolant selection with MCHI
+  * MCI<double, 2> cubic = Eigen::MCHI< MCI<double, 2> >::Interpolate(ys, xs); 
+  *
+  * // Cubic interpolation
+  * Vector2d pt = cubic(1.5);
+  *
+  * \endcode
+  *
+  */
+}
+
+#include "src/MonotoneCubicInterpolation/MonotoneCubicInterpolationFwd.h"
+#include "src/MonotoneCubicInterpolation/MonotoneCubicInterpolation.h"
+#include "src/MonotoneCubicInterpolation/MonotoneCubicHermiteInterpolation.h"
+
+#endif // EIGEN_MONOTONE_CUBIC_INTERPOLATION_MODULE_H
+

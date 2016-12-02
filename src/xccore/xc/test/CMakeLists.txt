@@ -1,0 +1,21 @@
+set(MODULE_NAME "${PROJECT_NAME}-${SubProject}")
+
+find_package(Boost REQUIRED COMPONENTS system)
+find_package(Eigen3 REQUIRED)
+
+include_directories(${Boost_INCLUDE_DIRS})
+include_directories(${EIGEN3_INCLUDE_DIR})
+
+link_directories(${CMAKE_CURRENT_BINARY_DIR})
+
+add_executable(${MODULE_NAME} math.cpp)
+
+target_link_libraries(${MODULE_NAME} ${OUTPUT_LINKS})
+
+install(TARGETS ${MODULE_NAME}
+  EXPORT ${PROJECT_NAME}
+  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin
+  LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT shlib
+  ARCHIVE DESTINATION "${INSTALL_LIB_DIR}" COMPONENT lib
+  PUBLIC_HEADER DESTINATION "${INSTALL_INCLUDE_DIR}/${PROJECT_NAME}/${MODULE_NAME}" COMPONENT header
+  COMPONENT bin)

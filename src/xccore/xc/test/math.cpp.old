@@ -1,0 +1,201 @@
+/*
+* License:The MIT License (MIT)
+*
+* Copyright (c) 2013 Yanyu Su
+*
+* Permission is hereby granted, free of charge, to any person obtaining a copy
+* of this software and associated documentation files (the "Software"), to deal
+* in the Software without restriction, including without limitation the rights
+* to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+* copies of the Software, and to permit persons to whom the Software is
+* furnished to do so, subject to the following conditions:
+*
+* The above copyright notice and this permission notice shall be included in
+* all copies or substantial portions of the Software.
+*
+* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+* THE SOFTWARE.
+*
+* Date:   18/04/2012
+*
+* Purpose: basical types and marcos
+*
+* Note:
+*/
+#include <xc/core/core.h>
+#include <string>
+#include <iostream>
+#include <xc/math/math.h>
+
+inline xc::math::matrix33 _ret test_return_copy_func1()
+{
+  xc::math::matrix33 ret;
+  xc::math::matrix33 matrix1 = xc::math::matrix33::Identity();
+  xc::math::matrix33 matrix2 = xc::math::matrix33::Identity();
+  ret = matrix1 + matrix2;
+  return ret;
+}
+
+inline void test_return_copy()
+{
+  std::cout << "%test return copy feature" << std::endl
+            << "%you should see 3 create matrix below" << std::endl;
+  xc::math::matrix33 rs0 = test_return_copy_func1();
+  std::cout << rs0 << std::endl;
+}
+
+inline void test_tpoly_lspb()
+{
+  std::cout << "%test tpoly" << std::endl;
+  xc::math::colvecX rs1 = xc::math::tpoly ( 0, 0, 0, 15.0, 0, 0, 15.0, 0.1 );
+  std::cout << rs1 << std::endl;
+
+  std::cout << "%test lspb" << std::endl;
+  xc::math::colvecX rs2 = xc::math::lspb ( 0, 15.0, 15.0, 0.1 );
+  std::cout << rs2 << std::endl;
+
+}
+
+inline void test_interpolate_linear_transform()
+{
+  xc::math::colvecX rs1 = xc::math::tpoly ( 0, 0, 0, 16.0, 0, 0, 16.0, 0.1 );
+  xc::math::colvecX rs2 = xc::math::lspb ( 0, 16.0, 16.0, 0.1 );
+  xc::math::matrix44 T1, T2;
+  T1 = xc::math::transl ( 0.0, 0.0, 0.0 );
+  T2 = xc::math::transl ( 100.0, 100.0, 0.0 ) * xc::math::trotx ( 90.0 / 180.0 * 3.1415926 ) * xc::math::trotz ( 90.0 / 180.0 * 3.1415926 );
+
+  std::cout << "%test interpolate with tpoly" << std::endl;
+  xc::math::stlvector_matrix44 rs3 = xc::math::interpolate_linear_transform ( T1, T2, rs1 );
+  std::cout << "A=zeros(4,4," << rs3.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs3.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs3[i] << "];" << std::endl;
+  }
+  std::cout << "%-------------------------------------------------" << std::endl;
+  std::cout << "test interpolate with lspb" << std::endl;
+  xc::math::stlvector_matrix44 rs4 = xc::math::interpolate_linear_transform ( T1, T2, rs2 );
+  std::cout << "A=zeros(4,4," << rs4.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs4.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs4[i] << "];" << std::endl;
+  }
+}
+
+/*
+inline void test_interpolate_linear_transforms()
+{
+  xc::math::colvecX rs1 = xc::math::tpoly ( 0, 0, 0, 15.0, 0, 0, 15.0, 0.1 );
+  xc::math::colvecX rs2 = xc::math::lspb ( 0, 15.0, 15.0, 0.1 );
+
+  xc::math::stlvector_matrix44 Ts;
+  Ts.reserve ( 10 );
+  Ts.push_back ( xc::math::transl ( 0.0, 0.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 0.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) * xc::math::trotx ( 90.0 / 180.0 * 3.1415926 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) * xc::math::trotx ( 90.0 / 180.0 * 3.1415926 ) * xc::math::trotz ( 90.0 / 180.0 * 3.1415926 ) );
+  std::cout << "%test interpolate Ts with tpoly" << std::endl;
+  xc::math::stlvector_matrix44 rs5 = xc::math::interpolate_linear_transforms ( Ts, rs1 );
+  std::cout << "A=zeros(4,4," << rs5.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs5.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs5[i] << "];" << std::endl;
+  }
+  std::cout << "%-------------------------------------------------" << std::endl;
+  std::cout << "test interpolate Ts with lspb" << std::endl;
+  xc::math::stlvector_matrix44 rs6 = xc::math::interpolate_linear_transforms ( Ts, rs2 );
+  std::cout << "A=zeros(4,4," << rs6.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs6.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs6[i] << "];" << std::endl;
+  }
+}
+*/
+
+inline void test_interpolate_spline()
+{
+  xc::math::colvecX rs1 = xc::math::tpoly ( 0, 0, 0, 15.0, 0, 0, 15.0, 0.1 );
+  xc::math::colvecX rs2 = xc::math::lspb ( 0, 15.0, 15.0, 0.1 );
+  xc::math::matrix3X input;
+  input.resize ( 3, 4 );
+  input << 0, 30, 80,  120,
+        0, 0,  30,  130,
+        0, 0,  0,   50;
+  xc::math::matrix3X rs7 = xc::math::spline ( input, rs2 );
+  std::cout << rs7 << std::endl;
+}
+
+inline void test_interpolate_spline_transforms()
+{
+  xc::math::colvecX rs1 = xc::math::tpoly ( 0, 0, 0, 15.0, 0, 0, 15.0, 0.1 );
+  xc::math::colvecX rs2 = xc::math::lspb ( 0, 15.0, 15.0, 0.1 );
+
+  xc::math::stlvector_matrix44 Ts;
+  Ts.reserve ( 10 );
+  Ts.push_back ( xc::math::transl ( 0.0, 0.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 0.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) * xc::math::trotx ( 90.0 / 180.0 * 3.1415926 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) * xc::math::trotx ( 90.0 / 180.0 * 3.1415926 ) * xc::math::trotz ( 90.0 / 180.0 * 3.1415926 ) );
+  //std::cout << "%test interpolate Ts with tpoly" << std::endl;
+  xc::math::stlvector_matrix44 rs5 = xc::math::interpolate_spline_transforms ( Ts, rs1 );
+  std::cout << "A=zeros(4,4," << rs5.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs5.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs5[i] << "];" << std::endl;
+  }
+  /*
+  std::cout << "%-------------------------------------------------" << std::endl;
+  std::cout << "test interpolate Ts with lspb" << std::endl;
+  xc::math::stlvector_matrix44 rs6 = xc::math::interpolate_spline_transforms ( Ts, rs2 );
+  std::cout << "A=zeros(4,4," << rs6.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs6.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs6[i] << "];" << std::endl;
+  }
+  */
+}
+
+
+inline void test_interpolate_mcspline_transforms()
+{
+  std::cout << "test_interpolate_mcspline_transforms" << std::endl;
+  xc::math::colvecX rs1 = xc::math::tpoly ( 0, 0, 0, 16.0, 0, 0, 16.0, 0.1 );
+  xc::math::colvecX rs2 = xc::math::lspb ( 0, 16.0, 16.0, 0.1 );
+
+  xc::math::stlvector_matrix44 Ts;
+  Ts.reserve ( 10 );
+  Ts.push_back ( xc::math::transl ( 0.0, 0.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 0.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) * xc::math::trotx ( 90.0 / 180.0 * 3.1415926 ) );
+  Ts.push_back ( xc::math::transl ( 100.0, 100.0, 0.0 ) * xc::math::trotx ( 90.0 / 180.0 * 3.1415926 ) * xc::math::trotz ( 90.0 / 180.0 * 3.1415926 ) );
+  std::cout << "%test interpolate Ts with tpoly" << std::endl;
+  xc::math::stlvector_matrix44 rs5 = xc::math::interpolate_mcspline_transforms ( Ts, rs1 );
+  std::cout << "A=zeros(4,4," << rs5.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs5.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs5[i] << "];" << std::endl;
+  }
+  /*
+  std::cout << "%-------------------------------------------------" << std::endl;
+  std::cout << "test interpolate Ts with lspb" << std::endl;
+  xc::math::stlvector_matrix44 rs6 = xc::math::interpolate_spline_transforms ( Ts, rs2 );
+  std::cout << "A=zeros(4,4," << rs6.size () << ");" << std::endl;
+  for ( size_t i = 0; i < rs6.size (); ++i )
+  {
+    std::cout << "A(:,:," << i + 1 << ")=[" << rs6[i] << "];" << std::endl;
+  }
+  */
+}
+
+int main()
+{
+  test_interpolate_mcspline_transforms();
+  return 1;
+}
