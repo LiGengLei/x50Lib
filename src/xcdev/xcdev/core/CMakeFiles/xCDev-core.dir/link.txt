@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../lib/libxCDev-core.a  CMakeFiles/xCDev-core.dir/network_based_dev.cpp.o
+/usr/bin/ranlib ../../lib/libxCDev-core.a

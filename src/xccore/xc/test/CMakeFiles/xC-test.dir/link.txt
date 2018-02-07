@@ -1,0 +1,1 @@
+/usr/bin/c++   -g    CMakeFiles/xC-test.dir/math.cpp.o  -o ../../bin/xC-test  -L/home/lgl/master/SCARA/xCLib/src/xccore/xc/test -rdynamic ../../lib/libxC-core.a -lboost_system ../../lib/libxC-math.a -Wl,-rpath,/home/lgl/master/SCARA/xCLib/src/xccore/xc/test: 

@@ -1,0 +1,3 @@
+/home/lgl/master/SCARA/xCLib/src/xccore/xc/core/CMakeFiles/xC-core.dir
+/home/lgl/master/SCARA/xCLib/src/xccore/xc/math/CMakeFiles/xC-math.dir
+/home/lgl/master/SCARA/xCLib/src/xccore/xc/test/CMakeFiles/xC-test.dir

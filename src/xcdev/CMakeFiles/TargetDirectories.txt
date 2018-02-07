@@ -1,0 +1,3 @@
+/home/lgl/master/SCARA/xCLib/src/xcdev/xcdev/PMAC/CMakeFiles/xCDev-PMAC.dir
+/home/lgl/master/SCARA/xCLib/src/xcdev/xcdev/PMAC/CMakeFiles/xCDev-PMAC_teriminal.dir
+/home/lgl/master/SCARA/xCLib/src/xcdev/xcdev/core/CMakeFiles/xCDev-core.dir

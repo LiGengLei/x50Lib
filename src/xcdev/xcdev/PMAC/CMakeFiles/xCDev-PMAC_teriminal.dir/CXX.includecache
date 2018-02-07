@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lgl/master/SCARA/xCLib/src/xccore/xc/core/core.h
+string
+-
+boost/lexical_cast.hpp
+-
+
+/home/lgl/master/SCARA/xCLib/src/xcdev/xcdev/PMAC/protocol.h
+xc/core/core.h
+-
+vector
+-
+list
+-
+boost/asio.hpp
+-
+boost/lambda/bind.hpp
+-
+boost/lambda/lambda.hpp
+-
+boost/algorithm/string.hpp
+-
+boost/static_assert.hpp
+-
+
+/home/lgl/master/SCARA/xCLib/src/xcdev/xcdev/PMAC/teriminal.cpp
+protocol.h
+/home/lgl/master/SCARA/xCLib/src/xcdev/xcdev/PMAC/protocol.h
+

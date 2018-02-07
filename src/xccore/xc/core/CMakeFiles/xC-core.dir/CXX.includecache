@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/lgl/master/SCARA/xCLib/src/xccore/xc/core/core.cpp
+cstdio
+-
+cerrno
+-
+cstdarg
+-
+cstring
+-
+stdexcept
+-
+core.h
+/home/lgl/master/SCARA/xCLib/src/xccore/xc/core/core.h
+
+/home/lgl/master/SCARA/xCLib/src/xccore/xc/core/core.h
+string
+-
+boost/lexical_cast.hpp
+-
+

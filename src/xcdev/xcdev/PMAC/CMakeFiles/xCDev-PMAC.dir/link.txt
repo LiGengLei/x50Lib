@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../lib/libxCDev-PMAC.a  CMakeFiles/xCDev-PMAC.dir/protocol.cpp.o
+/usr/bin/ranlib ../../lib/libxCDev-PMAC.a

@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../lib/libxC-math.a  CMakeFiles/xC-math.dir/math.cpp.o
+/usr/bin/ranlib ../../lib/libxC-math.a

@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../lib/libxCDev-PMAC_teriminal.a  CMakeFiles/xCDev-PMAC_teriminal.dir/teriminal.cpp.o
+/usr/bin/ranlib ../../lib/libxCDev-PMAC_teriminal.a

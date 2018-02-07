@@ -1,0 +1,2 @@
+/usr/bin/ar cr ../../lib/libxC-core.a  CMakeFiles/xC-core.dir/core.cpp.o
+/usr/bin/ranlib ../../lib/libxC-core.a
